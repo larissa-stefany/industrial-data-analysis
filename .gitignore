@@ -1,0 +1,12 @@
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ipynb_checkpoints/
+.DS_Store
+
+# Generated large datasets / databases
+data/raw/*.csv
+data/processed/manufacturing.db
+data/processed/manufacturing_production_clean.csv
