@@ -1,0 +1,20 @@
+Total Production = SUM(production[total_units])
+
+Good Units = SUM(production[good_units])
+
+Defective Units = SUM(production[defective_units])
+
+Defect Rate % = DIVIDE([Defective Units], [Total Production], 0)
+
+Downtime Hours = DIVIDE(SUM(production[downtime_minutes]), 60, 0)
+
+Availability % = AVERAGE(production[availability])
+
+Performance % = AVERAGE(production[performance])
+
+Quality % = AVERAGE(production[quality])
+
+OEE % = AVERAGE(production[oee])
+
+Production per Operating Hour =
+DIVIDE([Total Production], DIVIDE(SUM(production[operating_minutes]), 60, 0), 0)
