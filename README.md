@@ -36,6 +36,22 @@ Responder perguntas como:
 
 > Os dados são totalmente sintéticos e foram gerados apenas para fins educacionais e de portfólio.
 
+## Visualizações dos resultados
+
+Os gráficos abaixo foram gerados pelo código Python do projeto a partir de **dados sintéticos** de produção industrial.
+
+### Eficiência (OEE) por máquina
+
+![OEE médio por máquina](images/oee_by_machine.png)
+
+A comparação do OEE médio permite identificar equipamentos com menor eficiência operacional.
+
+### Pareto de defeitos por máquina
+
+![Pareto de unidades defeituosas por máquina](images/defect_pareto_by_machine.png)
+
+As barras mostram a **quantidade absoluta** de unidades defeituosas por máquina, enquanto a linha mostra a porcentagem acumulada. O volume de defeitos não equivale à taxa de defeitos; para comparar taxas, é necessário considerar a produção de cada máquina.
+
 ## Tecnologias
 
 - Python
