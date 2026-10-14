@@ -31,7 +31,7 @@ Responder perguntas como:
 - Aproximadamente **27 milhões de unidades produzidas**
 - **OEE médio: ~78,6%**
 - **Taxa média de defeitos: ~4,8%**
-- Máquina **M-12** identificada como um dos principais pontos críticos de qualidade
+- Máquina **M-12** com maior taxa de defeitos (indicador de qualidade); a máquina de menor OEE deve ser identificada separadamente pelo ranking de eficiência
 - **3º turno** com desempenho médio inferior aos demais turnos
 
 > Os dados são totalmente sintéticos e foram gerados apenas para fins educacionais e de portfólio.
@@ -53,36 +53,17 @@ Responder perguntas como:
 
 ```text
 industrial-data-analysis/
-├── data/
-│   ├── raw/                  # Dados brutos gerados localmente
-│   └── processed/            # Dados tratados e tabelas-resumo
-├── docs/
-│   └── project_plan.md
-├── images/
-│   ├── defect_rate_by_machine.png
-│   ├── monthly_production.png
-│   └── oee_by_shift.png
-├── notebooks/
-│   ├── 01_eda.ipynb
-│   ├── 02_quality_analysis.ipynb
-│   └── 03_productivity_analysis.ipynb
-├── powerbi/
-│   ├── README.md
-│   └── measures.dax
-├── sql/
-│   ├── analysis_queries.sql
-│   └── schema.sql
-├── src/
-│   ├── generate_data.py
-│   ├── etl.py
-│   └── kpis.py
-├── tests/
-│   └── test_pipeline.py
-├── .gitignore
-├── LICENSE
+├── .github/workflows/tests.yml  # Testes automáticos no GitHub Actions
+├── docs/                        # Plano, dicionário e questões de negócio
+├── powerbi/                     # Especificação e medidas DAX (não é um .pbix)
+├── sql/                         # Esquema e consultas SQL
+├── src/                         # Gerador, ETL, KPIs, qualidade e gráficos
+├── tests/                       # Testes automatizados com pytest
 ├── README.md
 └── requirements.txt
 ```
+
+As pastas `data/raw/`, `data/processed/` e `images/` são geradas localmente na execução; não são capturas de tela já publicadas no repositório.
 
 ## Como executar
 
@@ -117,7 +98,15 @@ python src/generate_data.py
 python src/etl.py
 ```
 
-### 5. Rode os testes
+### 5. Gere gráficos reais dos resultados
+
+```bash
+python -m src.generate_charts
+```
+
+As imagens serão salvas em `images/` (OEE por máquina e Pareto de defeitos), com base nos dados sintéticos processados pelo próprio projeto.
+
+### 6. Rode os testes
 
 ```bash
 pytest
@@ -136,9 +125,9 @@ Cleaning + Feature Engineering
        ↙         ↘
    SQL Analysis   Python EDA
        ↘         ↙
-        Power BI
+  KPIs + gráficos + insights
             ↓
-   Business Insights
+  Power BI (modelo proposto)
 ```
 
 ## Análises desenvolvidas
@@ -154,7 +143,7 @@ Cálculo e análise dos componentes de disponibilidade, performance e qualidade 
 
 ## Power BI
 
-A pasta `powerbi/` contém as medidas DAX e a especificação do dashboard. A proposta inclui:
+A pasta `powerbi/` contém medidas DAX e uma **especificação de dashboard**, não um relatório `.pbix` concluído. A proposta inclui:
 
 - Cards de Produção, OEE, Defeitos e Downtime
 - Ranking de máquinas críticas
@@ -166,13 +155,13 @@ A pasta `powerbi/` contém as medidas DAX e a especificação do dashboard. A pr
 
 Os arquivos brutos e o banco SQLite completos não são versionados no GitHub porque são gerados automaticamente e ocupam dezenas de MB. Para reproduzir exatamente a estrutura do projeto, execute `generate_data.py` e depois `etl.py`.
 
-As tabelas-resumo leves permanecem no repositório para facilitar a inspeção rápida dos resultados.
+Os indicadores podem ser reproduzidos executando `python -m src.kpis` e `python -m src.insights` após a geração e o ETL. Os gráficos são gerados com `python -m src.generate_charts`.
 
 ## Próximos passos
 
 - Criar modelo preditivo de falhas/manutenção
 - Implementar análise de causa raiz automatizada
-- Adicionar pipeline CI com testes
+- Ampliar cobertura do pipeline CI existente com testes de integração e SQL
 - Evoluir dashboard para acompanhamento operacional quase em tempo real
 
 ## Autora
